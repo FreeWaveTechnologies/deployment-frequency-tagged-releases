@@ -51,3 +51,4 @@ runs:
          Set-Content -Path $filePath -Value $result
          "markdown-file=$filePath" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
          Write-Output $result >> $env:GITHUB_STEP_SUMMARY
+         echo "done"
