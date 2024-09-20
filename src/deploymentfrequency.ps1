@@ -101,8 +101,8 @@ function Main ([string] $ownerRepo,
 
         $buildTotal = 0
         Foreach ($run in $workflowRunsResponse.workflow_runs) {
-            # Check if the run is a tag and was created within the day range we are looking at
-            if ($run.event -eq "push" -and $run.ref -like "refs/tags/*" -and $run.created_at -gt (Get-Date).AddDays(-$numberOfDays)) {
+            # Check if the run is a tag (release) and was created within the day range we are looking at
+            if ($run.ref -like "refs/tags/v*" -and $run.created_at -gt (Get-Date).AddDays(-$numberOfDays)) {
                 # Write-Host "Adding item with status $($run.status), tag $($run.ref), created at $($run.created_at), compared to $((Get-Date).AddDays(-$numberOfDays))"
                 $buildTotal++
                 # Get the workflow start and end time
@@ -110,6 +110,7 @@ function Main ([string] $ownerRepo,
                 $uniqueDates += $run.created_at.Date.ToString("yyyy-MM-dd")
             }
         }
+        
 
         if ($dateList.Length -gt 0)
         {
