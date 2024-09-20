@@ -101,6 +101,8 @@ function Main ([string] $ownerRepo,
 
         $buildTotal = 0
         Foreach ($run in $workflowRunsResponse.workflow_runs) {
+            # Debug print to check the run details
+            Write-Host "Processing run with ref: $($run.ref), event: $($run.event), created at: $($run.created_at)"
             # Check if the run is a tag (release) and was created within the day range we are looking at
             if ($run.ref -like "refs/tags/v*" -and $run.created_at -gt (Get-Date).AddDays(-$numberOfDays)) {
                 # Write-Host "Adding item with status $($run.status), tag $($run.ref), created at $($run.created_at), compared to $((Get-Date).AddDays(-$numberOfDays))"
